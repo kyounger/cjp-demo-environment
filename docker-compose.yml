@@ -61,8 +61,8 @@ services:
     volumes:
       - ./data/cje-prod:/var/jenkins_home
       - ./data/backups:/backups
-    volumes_from:
-      - ssh-slave
+      - /var/run/docker.sock:/var/run/docker.sock #aka "docker socket volume mapping"
+      - ${MAVEN_CACHE} #to persist and share the precious maven cache
 
   cje-test:
     container_name: cje-test
@@ -84,8 +84,8 @@ services:
     volumes:
       - ./data/cje-test:/var/jenkins_home
       - ./data/backups:/backups
-    volumes_from:
-      - ssh-slave
+      - /var/run/docker.sock:/var/run/docker.sock #aka "docker socket volume mapping"
+      - ${MAVEN_CACHE} #to persist and share the precious maven cache
 
   ssh-slave:
     container_name: ssh-slave
